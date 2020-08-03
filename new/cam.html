@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>membuat capture camera</title>
+		<script type="text/javascript">
+		// Menambahkan listener setelah conten selesai di load
+	window.addEventListener("DOMContentLoaded", function() {
+	  // menyeleksi elemen dan membuat pengaturan awal
+	  var canvas = document.getElementById("canvas"),
+		context = canvas.getContext("2d"),
+		video = document.getElementById("video"),
+		videoObj = { "video": true },
+		errBack = function(error) {
+		  console.log("Video capture error: ", error.code); 
+		};
+
+		// event saat tombol tak foto
+	document.getElementById("video").addEventListener("click", function() {
+	  context.drawImage(video, 0, 0, 400, 300);
+	  //alert('test ko ngga bisa ya');
+	});
+
+	// ambil video untuk kanvas awal
+	  if(navigator.getUserMedia) { // Standard
+		navigator.getUserMedia(videoObj, function(stream) {
+		  video.src = stream;
+		  video.play();
+		}, errBack);
+	  } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+		navigator.webkitGetUserMedia(videoObj, function(stream){
+		  video.src = window.webkitURL.createObjectURL(stream);
+		  video.play();
+		}, errBack);
+	  }
+	}, false);
+	
+</script>
+<style type="text/css">
+	#awal{
+		box-shadow: 0px 0px 3px #000;
+		padding :5px;
+		text-align:center;
+		width:210px;
+		margin:auto;
+		cursor:pointer;
+	}
+	#video{
+		border:1px solid #AEAEAE;
+		padding:2px;
+	}
+	#hasil{
+		box-shadow: 0px 0px 3px #000;
+		padding :5px;
+		text-align:center;
+		width:410px;
+		margin:auto;
+		cursor:pointer;
+	}
+	#canvas{
+		border:1px solid #AEAEAE;
+		padding:0px;
+	}</style>
+</head>
+<body>
+	<!--
+	  Biasanya Element tidak akan dibuat atau muncul jika belum di ijinkan (allow) oleh client diperbolehkan akses camera.
+	-->
+	<div id="awal">
+	<video id="video" width="200" height="150" autoplay></video>
+	Klik Video diatas Untuk mengambil Gambar
+	</div>
+	<br><br>
+	<!-- <button id="snap">Snap Photo</button> -->
+	<div id="hasil">
+	<canvas id="canvas" width="400" height="300"></canvas>
+	Hasil Capture foto.
+	</div>
+	<div id="footer"> Berterimakasihlah kepada yang menemukan HTML5, Javascript - DOM, Saya : <a href="http://upyes.wordpress.com" target="_blank">Saefulloh Rifai</a> hanya mengembangkan</div>
+</body>
+</html>
